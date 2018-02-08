@@ -1,5 +1,10 @@
 package com.company.project.android.ui.main;
 
+import com.company.project.android.api.ApiEngine;
+import com.company.project.android.bean.Gank;
+
+import io.reactivex.Observable;
+
 /**
  * @author Administrator
  * @name MyMvp
@@ -15,5 +20,12 @@ public class MainModel implements MainContract.Model {
     @Override
     public String loginSuccess() {
         return "成功了";
+    }
+
+    @Override
+    public Observable<Gank> getGank() {
+        return ApiEngine.getInstance().getApiService()
+                        .getGank("1");
+
     }
 }

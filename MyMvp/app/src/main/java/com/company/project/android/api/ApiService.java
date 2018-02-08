@@ -19,6 +19,7 @@ import retrofit2.http.Path;
 public interface ApiService {
 
 
+    //http://gank.io/api/data/Android/10/1
     @GET("api/data/Android/10/{page}")
     Observable<Gank> getGank(@Path("page") String page);
 }
