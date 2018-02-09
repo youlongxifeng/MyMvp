@@ -8,6 +8,7 @@
     tools:context="com.company.project.android.ui.main.MainActivity">
 
     <TextView
+        android:id="@+id/return_value_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"

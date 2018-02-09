@@ -3,7 +3,6 @@ package com.company.project.android.ui.main;
 import android.util.Log;
 
 import com.company.project.android.bean.Gank;
-import com.company.project.android.mvp.BaseView;
 import com.company.project.android.mvp.rx.RxSchedulers;
 
 import java.util.Map;
@@ -26,22 +25,10 @@ import io.reactivex.observers.DisposableObserver;
 public class MainPresenter extends MainContract.Presenter {
 
 
-    public MainPresenter(MainContract.View view) {
-        this.mView = view;
+    public MainPresenter(/*MainContract.View view*/) {
+        //this.mView = view;
         this.mModel = new MainModel();
     }
-
-
-    @Override
-    public void attachView(BaseView view) {
-        Log.i("TAG", "=====attachView=" + view.getClass().getName());
-    }
-
-    @Override
-    public void detachView() {
-        Log.i("TAG", "=====detachView=");
-    }
-
 
     @Override
     public String login(Map maps) {

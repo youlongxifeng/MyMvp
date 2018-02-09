@@ -8,6 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import com.company.project.android.mvp.BasePresenter;
 import com.company.project.android.mvp.BaseView;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 /**
  * @author Administrator
  * @name MyMvp
@@ -21,13 +24,16 @@ import com.company.project.android.mvp.BaseView;
 
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity implements BaseView {
     public P mPresenter;
+    Unbinder mUnbinder;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getlayoutId());
+        mUnbinder = ButterKnife.bind(this);
         if (getlayoutId() != 0) {
             mPresenter = setPresenter();
+            mPresenter.attachView(this);
         }
         initView();
         initDate();
@@ -54,6 +60,10 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         super.onDestroy();
         if (mPresenter != null) {
             mPresenter.detachView();
+            mPresenter.unSubscribe();
+        }
+        if (mUnbinder != null) {
+            mUnbinder.unbind();
         }
     }
 }
