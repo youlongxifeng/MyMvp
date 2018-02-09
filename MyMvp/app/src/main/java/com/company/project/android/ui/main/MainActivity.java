@@ -14,7 +14,7 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseActivity<MainPresenter>
         implements MainContract.View {
-@BindView(R.id.return_value_name)
+    @BindView(R.id.return_value_name)
     TextView mRvNameTv;
 
     @Override
@@ -35,8 +35,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void initDate() {
         mPresenter.getGank();
-        Map<String,String>map=new HashMap<>();
-        mPresenter.login( map);
+        Map<String, String> map = new HashMap<>();
+        mPresenter.login(map);
 
     }
 
