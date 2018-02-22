@@ -33,6 +33,11 @@ public class RxSchedulers {
         };
     }
 
+    /**
+     * 统一线程处理 ompose简化线程
+     * @param <T>
+     * @return
+     */
     public static <T> ObservableTransformer<T, T> switchObservableThread() {
         return new ObservableTransformer<T, T>() {
             @Override

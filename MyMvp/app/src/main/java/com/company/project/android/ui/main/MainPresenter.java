@@ -61,6 +61,7 @@ public class MainPresenter extends MainContract.Presenter {
         //  .subscribe(mObserver);
         mModel.getGank()
               .compose(RxSchedulers.<Gank>switchObservableThread())
+
               .subscribe(mObserver);
         addSubscribe(mObserver);
 
