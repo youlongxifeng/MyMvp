@@ -1,5 +1,9 @@
 package com.company.project.android.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +16,7 @@ import java.util.List;
  * @class describe
  */
 
-public class Gank {
+public class Gank implements Parcelable{
     private boolean error;
 
     /**
@@ -45,6 +49,7 @@ public class Gank {
     public void setResults(List<Result> results) {
         this.results = results;
     }
+
 
     public static class Result {
 
@@ -155,4 +160,37 @@ public class Gank {
                     '}';
         }
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeByte(this.error ? (byte) 1 : (byte) 0);
+        dest.writeList(this.results);
+    }
+
+    public Gank() {
+    }
+
+    protected Gank(Parcel in) {
+        this.error = in.readByte() != 0;
+        this.results = new ArrayList<Result>();
+        in.readList(this.results, Result.class.getClassLoader());
+    }
+
+    public static final Creator<Gank> CREATOR = new Creator<Gank>() {
+        @Override
+        public Gank createFromParcel(Parcel source) {
+            return new Gank(source);
+        }
+
+        @Override
+        public Gank[] newArray(int size) {
+            return new Gank[size];
+        }
+    };
 }

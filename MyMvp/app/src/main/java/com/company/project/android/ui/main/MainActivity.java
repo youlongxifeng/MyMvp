@@ -14,6 +14,7 @@ import butterknife.BindView;
 
 public class MainActivity extends BaseActivity<MainPresenter>
         implements MainContract.View {
+
     @BindView(R.id.return_value_name)
     TextView mRvNameTv;
 
