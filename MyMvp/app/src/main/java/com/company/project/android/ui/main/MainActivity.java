@@ -1,11 +1,14 @@
 package com.company.project.android.ui.main;
 
+import android.os.Handler;
+import android.os.Message;
 import android.widget.TextView;
 
 import com.company.project.android.R;
 import com.company.project.android.base.BaseActivity;
 import com.company.project.android.bean.Gank;
 
+import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,4 +68,36 @@ public class MainActivity extends BaseActivity<MainPresenter>
     public void hideDialog() {
 
     }
+    /**安卓Handler当做内部类，导致内存泄露的问题 自己来记录
+     * Instances of static inner classes do not hold an implicit
+     * reference to their outer class.
+     */
+    private static class MyHandler extends Handler {
+        private final WeakReference<MainActivity> mActivity;
+
+        public MyHandler(MainActivity activity) {
+            mActivity = new WeakReference<MainActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            MainActivity activity = mActivity.get();
+            if (activity != null) {
+                // ...
+            }
+        }
+    }
+
+    private final MyHandler mHandler = new MyHandler(this);
+
+    /**
+     * Instances of anonymous classes do not hold an implicit
+     * reference to their outer class when they are "static".
+     */
+    private static final Runnable sRunnable = new Runnable() {
+        @Override
+        public void run() { /* ... */ }
+    };
+
+
 }
