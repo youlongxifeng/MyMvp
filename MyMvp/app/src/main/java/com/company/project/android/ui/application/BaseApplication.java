@@ -5,6 +5,14 @@ import android.app.Application;
 import android.app.Application.ActivityLifecycleCallbacks;
 import android.os.Bundle;
 
+import com.company.project.android.observer.Events;
+import com.company.project.android.utils.LogUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.NoSubscriberEvent;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 /**
  * @author Administrator
  * @name MyMvp
@@ -17,13 +25,35 @@ import android.os.Bundle;
 
 public class BaseApplication extends Application implements ActivityLifecycleCallbacks {
     private static BaseApplication mContext;
-
+    private   EventBus mEventsBus;
     @Override
     public void onCreate() {
         super.onCreate();
         mContext = this;
+        Events.register(this);
+        Events.post(new Runnable() {
+            @Override
+            public void run() {
+                LogUtils.i("=======================");
+            }
+        });
 
     }
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onEvent(NoSubscriberEvent event) {
+        android.util.Log.w("zxj", String.format("event no Subscriber %s , %s ", event.originalEvent.getClass(), event.originalEvent.toString()));
+    }
+
+    @Subscribe(threadMode = ThreadMode.ASYNC)
+    public void onEvent(Runnable runnable) {
+        try {
+            runnable.run();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 
     public static BaseApplication getContext() {
         return mContext;

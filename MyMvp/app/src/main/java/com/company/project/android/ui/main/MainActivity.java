@@ -42,7 +42,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
         Map<String, String> map = new HashMap<>();
         mPresenter.login(map);
 
+
     }
+
 
     @Override
     public void setLogin(String active) {
@@ -68,7 +70,9 @@ public class MainActivity extends BaseActivity<MainPresenter>
     public void hideDialog() {
 
     }
-    /**安卓Handler当做内部类，导致内存泄露的问题 自己来记录
+
+    /**
+     * 安卓Handler当做内部类，导致内存泄露的问题 自己来记录
      * Instances of static inner classes do not hold an implicit
      * reference to their outer class.
      */
