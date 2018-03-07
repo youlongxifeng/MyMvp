@@ -50,7 +50,7 @@ public class Events {
     private final EventBus mEventsBus;
     private Events()
     {
-        //添加索引
+        //添加索引,添加索引后只有执行相关索引MyEventBusIndex才会有，做记录
         mEventsBus = EventBus.builder().addIndex(new MyEventBusIndex()).installDefaultEventBus();
         mHandler = new Handler(Looper.getMainLooper());
     }
