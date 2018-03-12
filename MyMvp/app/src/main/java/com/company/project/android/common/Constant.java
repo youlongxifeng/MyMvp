@@ -12,4 +12,5 @@ package com.company.project.android.common;
 
 public class Constant {
     public static   String BASE_URL="http://gank.io/";
+    public final static String TIME_TOKEN="timetoken";
 }

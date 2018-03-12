@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.company.project.android.bean.Gank;
 import com.company.project.android.mvp.rx.RxSchedulers;
+import com.company.project.android.utils.LogUtils;
 
 import java.util.Map;
 
@@ -61,7 +62,6 @@ public class MainPresenter extends MainContract.Presenter {
         //  .subscribe(mObserver);
         mModel.getGank()
               .compose(RxSchedulers.<Gank>switchObservableThread())
-
               .subscribe(mObserver);
         addSubscribe(mObserver);
 
@@ -71,6 +71,7 @@ public class MainPresenter extends MainContract.Presenter {
         return new DisposableObserver<Gank>() {
             @Override
             public void onNext(Gank aBoolean) {
+                LogUtils.i("TAG","aBoolean==="+aBoolean);
 
             }
 

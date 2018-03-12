@@ -25,7 +25,8 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class BaseApplication extends Application implements ActivityLifecycleCallbacks {
     private static BaseApplication mContext;
-    private   EventBus mEventsBus;
+    private EventBus mEventsBus;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -37,8 +38,12 @@ public class BaseApplication extends Application implements ActivityLifecycleCal
                 LogUtils.i("=======================");
             }
         });
-
     }
+
+    public static BaseApplication getInstance() {
+        return mContext;
+    }
+
     @Subscribe(threadMode = ThreadMode.ASYNC)
     public void onEvent(NoSubscriberEvent event) {
         android.util.Log.w("zxj", String.format("event no Subscriber %s , %s ", event.originalEvent.getClass(), event.originalEvent.toString()));
@@ -52,7 +57,6 @@ public class BaseApplication extends Application implements ActivityLifecycleCal
             e.printStackTrace();
         }
     }
-
 
 
     public static BaseApplication getContext() {

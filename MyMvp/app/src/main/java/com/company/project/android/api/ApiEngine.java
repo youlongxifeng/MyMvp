@@ -1,7 +1,6 @@
 package com.company.project.android.api;
 
-import android.util.Log;
-
+import com.company.project.android.api.interceptor.HttpLoggingInterceptor;
 import com.company.project.android.api.interceptor.NetworkInterceptor;
 import com.company.project.android.common.Constant;
 import com.company.project.android.ui.application.BaseApplication;
@@ -12,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -31,15 +29,15 @@ public class ApiEngine {
     private Retrofit retrofit;
 
     private ApiEngine() {
-        HttpLoggingInterceptor.Logger mLog=   new HttpLoggingInterceptor.Logger(){
+        HttpLoggingInterceptor.Logger mLog = new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(String message) {
-                Log.i("TAG","message=="+message);
+                //Log.i("TAG", "message==" + message);
             }
         };
 
         //日志拦截器
-        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(mLog);
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         //缓存
@@ -51,7 +49,7 @@ public class ApiEngine {
                 .connectTimeout(12, TimeUnit.SECONDS)
                 .writeTimeout(12, TimeUnit.SECONDS)
                 .writeTimeout(12, TimeUnit.SECONDS)
-                .addNetworkInterceptor(new NetworkInterceptor())
+                .addNetworkInterceptor(new NetworkInterceptor())// 将有网络拦截器当做网络拦截器添加
                 .addInterceptor(loggingInterceptor)
                 .cache(cache)
                 .build();

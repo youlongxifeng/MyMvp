@@ -1,10 +1,12 @@
 package com.company.project.android.api;
 
+import com.company.project.android.bean.DataResponse;
 import com.company.project.android.bean.Gank;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 /**
  * @author Administrator
@@ -22,4 +24,10 @@ public interface ApiService {
     //http://gank.io/api/data/Android/10/1
     @GET("api/data/Android/10/{page}")
     Observable<Gank> getGank(@Path("page") String page);
+
+    @GET("v1/ads/list?")
+    Observable<DataResponse> getConfigInfoApi(@Query("device_id") String device_id,
+                                              @Query("version") String version,
+                                              @Query("ads_support") String ads_support,
+                                              @Query("timetoken") long timetoken);
 }

@@ -22,14 +22,13 @@ public class BasePresenter<V extends BaseView, M extends BaseModel> {
     protected M mModel;
 
 
-
     public void attachView(BaseView view) {
-        this.mView= (V) view;
-        Log.i("TAG", "=====attachView=" +view.getClass().getName());
+        this.mView = (V) view;
+        Log.i("TAG", "=====attachView=" + view.getClass().getName());
     }
 
     public void detachView() {
-        Log.i("TAG", "=====detachView=" );
+        Log.i("TAG", "=====detachView=");
         if (mView != null) {
             mView = null;
         }

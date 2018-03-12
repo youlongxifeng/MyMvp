@@ -34,7 +34,9 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
             setContentView(layoutResID);
             mUnbinder = ButterKnife.bind(this);
             mPresenter = setPresenter();
-            mPresenter.attachView(this);
+            if (mPresenter != null) {
+                mPresenter.attachView(this);
+            }
         }
         initView();
         initDate();

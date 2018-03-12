@@ -193,4 +193,13 @@ public class Gank implements Parcelable{
             return new Gank[size];
         }
     };
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Gank{");
+        sb.append("error=").append(error);
+        sb.append(", results=").append(results);
+        sb.append('}');
+        return sb.toString();
+    }
 }

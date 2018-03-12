@@ -1,5 +1,7 @@
 package com.company.project.android.ui.main;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.TextView;
@@ -7,6 +9,7 @@ import android.widget.TextView;
 import com.company.project.android.R;
 import com.company.project.android.base.BaseActivity;
 import com.company.project.android.bean.Gank;
+import com.company.project.android.ui.fragment.adsfragment.AdsFragment;
 
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
@@ -42,7 +45,13 @@ public class MainActivity extends BaseActivity<MainPresenter>
         Map<String, String> map = new HashMap<>();
         mPresenter.login(map);
 
-
+        AdsFragment adsFragment = new AdsFragment();
+        FragmentManager manager = getFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(R.id.context_fragment, adsFragment);
+        //设置简单的过度动画
+        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        transaction.commit();
     }
 
 
