@@ -40,6 +40,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         }
         initView();
         initDate();
+
     }
 
     //由于某些工具类，需要在setContentView的顺序前或者后来编辑
