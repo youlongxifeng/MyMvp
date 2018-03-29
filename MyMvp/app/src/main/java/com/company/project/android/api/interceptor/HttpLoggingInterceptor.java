@@ -10,7 +10,6 @@ package com.company.project.android.api.interceptor;
  * @class describe
  */
 
-import com.company.project.android.utils.LogUtils;
 import com.company.project.android.utils.ZipHelper;
 
 import java.io.EOFException;
@@ -120,7 +119,7 @@ public class HttpLoggingInterceptor implements Interceptor {
             @Override
             public void log(String message) {
 //                Platform.get().log(INFO, message, null);
-                LogUtils.i(message);
+               // LogUtils.i(message);
             }
         };
     }

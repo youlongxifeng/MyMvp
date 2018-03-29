@@ -3,6 +3,7 @@ package com.company.project.android.ui.main;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.hardware.Camera;
+import android.hardware.Camera.CameraInfo;
 import android.os.Handler;
 import android.os.Message;
 import android.widget.TextView;
@@ -54,9 +55,20 @@ public class MainActivity extends BaseActivity<MainPresenter>
         //设置简单的过度动画
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
-
+        Camera    mCamera;
+        boolean face=true;
         for (int i = 0, count = Camera.getNumberOfCameras(); i < count; i++) {
-
+            if ( face) {
+                mCamera = Camera.open(CameraInfo.CAMERA_FACING_FRONT);
+                mCameraInfo.facing = 1;
+                Camera.getCameraInfo(CameraInfo.CAMERA_FACING_FRONT, mCameraInfo);
+                face=false;
+            } else {
+                face=true;
+                //mCamera = Camera.open(CameraInfo.CAMERA_FACING_BACK);
+                mCameraInfo.facing = 0;
+                Camera.getCameraInfo(CameraInfo.CAMERA_FACING_BACK, mCameraInfo);
+            }
             Camera.getCameraInfo(i, mCameraInfo);
             LogUtils.i("TAG","mCameraInfo=="+mCameraInfo.facing);
 

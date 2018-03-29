@@ -1,7 +1,12 @@
 package com.company.project.android.utils;
 
 
+import android.text.TextUtils;
 import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 /**
@@ -188,6 +193,69 @@ public class LogUtils {
         }
     }
 
+    /**
+     * 展示json数据
+     * @param tag
+     * @param msg
+     */
+    public static void json(String tag, String msg) {
+        if(sIsTrace) {
+            if(TextUtils.isEmpty(msg)) {
+                Log.i(tag, "msg is null.");
+                return;
+            }
+
+            try {
+                String message;
+                String[] lines;
+                String[] var5;
+                int var6;
+                int var7;
+                String line;
+                if(msg.startsWith("{")) {
+                    JSONObject jsonObject = new JSONObject(msg);
+                    message = jsonObject.toString(4);
+                    lines = message.split(System.getProperty("line.separator"));//是换行符,功能和"\n"是一致的,但是此种写法屏蔽了 Windows和Linux的区别 ，更保险一些.
+                    Log.i(tag, "┌───────────────────────────────────────────────────────────────────────────────────────");
+                    var5 = lines;
+                    var6 = lines.length;
+
+                    for(var7 = 0; var7 < var6; ++var7) {
+                        line = var5[var7];
+                        Log.i(tag, "│ " + line);
+                    }
+
+                    Log.i(tag, "└───────────────────────────────────────────────────────────────────────────────────────");
+                    return;
+                }
+
+                if(msg.startsWith("[")) {
+                    JSONArray jsonArray = new JSONArray(msg);
+                    message = jsonArray.toString(4);
+                    lines = message.split(System.getProperty("line.separator"));
+                    Log.i(tag, "┌───────────────────────────────────────────────────────────────────────────────────────");
+                    var5 = lines;
+                    var6 = lines.length;
+
+                    for(var7 = 0; var7 < var6; ++var7) {
+                        line = var5[var7];
+                        Log.i(tag, "│ " + line);
+                    }
+
+                    Log.i(tag, "└───────────────────────────────────────────────────────────────────────────────────────");
+                }
+            } catch (JSONException var9) {
+                Log.e(tag, var9.getCause().getMessage() + "\n" + msg);
+            }
+        }
+
+    }
+
+    /**
+     * 保存日志文件
+     * @param tag
+     * @param msg
+     */
     public static void saveLog(String tag, String msg) {
         if (sIsDebug) {
             StackTraceElement[] list = Thread.currentThread().getStackTrace();
