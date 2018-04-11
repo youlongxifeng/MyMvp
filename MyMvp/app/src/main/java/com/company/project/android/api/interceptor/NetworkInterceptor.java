@@ -22,7 +22,7 @@ import okhttp3.Response;
  * @class describe
  */
 
-public class  NetworkInterceptor implements Interceptor {
+public class NetworkInterceptor implements Interceptor {
 
     @Override
     public Response intercept(Chain chain) throws IOException {
@@ -45,6 +45,10 @@ public class  NetworkInterceptor implements Interceptor {
             LogUtils.i("GET 请求方式  url=" + request.url());
         }
         Response response = chain.proceed(request);
+       /* String cookie = response.header("Set-Cookie");
+        if (cookie != null) {
+            SharedPrefercesUtils.saveCookiePreference(BaseApplication.getContext().getBaseContext(), cookie);
+        }*/
         if (isConnected) {
             // 有网络时，设置超时为0
             int maxStale = 0;

@@ -1,5 +1,6 @@
 package com.company.project.android.api;
 
+import com.company.project.android.api.cookie.CookiesManager;
 import com.company.project.android.api.interceptor.HttpLoggingInterceptor;
 import com.company.project.android.api.interceptor.NetworkInterceptor;
 import com.company.project.android.common.Constant;
@@ -49,6 +50,7 @@ public class ApiEngine {
                 .connectTimeout(12, TimeUnit.SECONDS)
                 .writeTimeout(12, TimeUnit.SECONDS)
                 .writeTimeout(12, TimeUnit.SECONDS)
+                .cookieJar(new CookiesManager())//在OkHttpClient创建时，传入这个CookieJar的实现，就能完成对Cookie的自动管理了
                 .addNetworkInterceptor(new NetworkInterceptor())// 将有网络拦截器当做网络拦截器添加
                 .addInterceptor(loggingInterceptor)
                 .cache(cache)
