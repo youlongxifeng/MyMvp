@@ -17,7 +17,7 @@ import io.reactivex.subscribers.ResourceSubscriber;
  * @class describe
  */
 
-public abstract class CommonSubscriber   extends ResourceSubscriber  {
+public abstract class CommonSubscriber<T> extends ResourceSubscriber<T>  {
     private BaseView mView;
     private String mErrorMsg;
     private boolean isShowErrorState = true;

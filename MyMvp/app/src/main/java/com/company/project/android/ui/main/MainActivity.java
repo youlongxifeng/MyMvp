@@ -5,10 +5,10 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
-import android.hardware.Camera.CameraInfo;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.ExifInterface;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.ActivityCompat;
@@ -21,6 +21,7 @@ import com.company.project.android.bean.Gank;
 import com.company.project.android.ui.fragment.adsfragment.AdsFragment;
 import com.company.project.android.utils.LogUtils;
 
+import java.io.File;
 import java.lang.ref.WeakReference;
 import java.util.HashMap;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
     @Override
     public void initView() {
-        Log.i("TAG","location====");
+        Log.i("TAG", "location====");
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         if (ActivityCompat.checkSelfPermission(this, permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
@@ -59,10 +60,65 @@ public class MainActivity extends BaseActivity<MainPresenter>
             return;
         }
         Location location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-        Log.i("TAG","location===="+location);
-        if(location!=null)
-        Log.i("TAG","location===="+location.getLatitude()+ "   经度："+location.getLongitude());
+        Log.i("TAG", "location====" + location);
+        if (location != null) {
+            Log.i("TAG", "location====" + location.getLatitude() + "   经度：" + location.getLongitude());
+        }
 
+        getPhotoLocation(Environment.getExternalStorageDirectory() + File.separator + "a3.jpg");
+        showDialog();
+    }
+
+    /**
+     * 通过一张图片查询拍照地理位置
+     *
+     * @param imagePath
+     */
+    public void getPhotoLocation(String imagePath) {
+        File file = new File(imagePath);
+        LogUtils.i("getPhotoLocation=" + file.getAbsolutePath() + "  =" + file.exists());
+        if (file.exists()) {
+            try {
+                ExifInterface exifInterface = new ExifInterface(imagePath);
+                String datetime = exifInterface.getAttribute(ExifInterface.TAG_DATETIME);// 拍摄时间
+                String deviceName = exifInterface.getAttribute(ExifInterface.TAG_MAKE);// 设备品牌
+                String deviceModel = exifInterface.getAttribute(ExifInterface.TAG_MODEL); // 设备型号
+                String latValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE);
+                String lngValue = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE);
+                String latRef = exifInterface.getAttribute(ExifInterface.TAG_GPS_LATITUDE_REF);
+                String lngRef = exifInterface.getAttribute(ExifInterface.TAG_GPS_LONGITUDE_REF);
+                LogUtils.i("output1=" + " latValue=" + latValue + "  latRef=" + latRef);
+                LogUtils.i("output2=" + " lngValue=" + lngValue + "  latRef=" + lngRef);
+                float output1 = convertRationalLatLonToFloat(latValue, latRef);
+                float output2 = convertRationalLatLonToFloat(lngValue, lngRef);
+                LogUtils.i("output1=" + output1 + " latValue=" + latValue + "  latRef=" + latRef);
+                LogUtils.i("output2=" + output2 + " lngValue=" + lngValue + "  latRef=" + lngRef);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }
+
+    private static float convertRationalLatLonToFloat(
+            String rationalString, String ref) {
+        String[] parts = rationalString.split(",");
+        String[] pair;
+        pair = parts[0].split("/");
+        double degrees = Double.parseDouble(pair[0].trim())
+                / Double.parseDouble(pair[1].trim());
+        pair = parts[1].split("/");
+        double minutes = Double.parseDouble(pair[0].trim())
+                / Double.parseDouble(pair[1].trim());
+        pair = parts[2].split("/");
+        double seconds = Double.parseDouble(pair[0].trim())
+                / Double.parseDouble(pair[1].trim());
+        double result = degrees + (minutes / 60.0) + (seconds / 3600.0);
+        if ((ref.equals("S") || ref.equals("W"))) {
+            return (float) -result;
+        }
+        return (float) result;
     }
 
     @Override
@@ -78,29 +134,8 @@ public class MainActivity extends BaseActivity<MainPresenter>
         //设置简单的过度动画
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
-        Camera    mCamera;
-        boolean face=true;
-        for (int i = 0, count = Camera.getNumberOfCameras(); i < count; i++) {
-            if ( face) {
-                mCamera = Camera.open(CameraInfo.CAMERA_FACING_FRONT);
-                mCameraInfo.facing = 1;
-                Camera.getCameraInfo(CameraInfo.CAMERA_FACING_FRONT, mCameraInfo);
-                face=false;
-            } else {
-                face=true;
-                //mCamera = Camera.open(CameraInfo.CAMERA_FACING_BACK);
-                mCameraInfo.facing = 0;
-                Camera.getCameraInfo(CameraInfo.CAMERA_FACING_BACK, mCameraInfo);
-            }
-            Camera.getCameraInfo(i, mCameraInfo);
-            LogUtils.i("TAG","mCameraInfo=="+mCameraInfo.facing);
-
-        }
 
     }
-    private final Camera.CameraInfo mCameraInfo = new Camera.CameraInfo();
-
-
 
 
     @Override

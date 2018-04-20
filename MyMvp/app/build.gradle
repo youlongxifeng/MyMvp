@@ -47,7 +47,7 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 
-    implementation 'org.greenrobot:eventbus:latest.release'
+    implementation 'org.greenrobot:eventbus:latest.release'//latest.release当前最新版本
     annotationProcessor "org.greenrobot:eventbus-annotation-processor:latest.release"
     implementation project(':adslibrary')
 }

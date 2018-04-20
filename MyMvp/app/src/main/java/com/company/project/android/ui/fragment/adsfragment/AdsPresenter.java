@@ -1,6 +1,7 @@
 package com.company.project.android.ui.fragment.adsfragment;
 
 import com.company.project.android.bean.DataResponse;
+import com.company.project.android.mvp.rx.CommonSubscriber;
 import com.company.project.android.mvp.rx.RxSchedulers;
 
 import io.reactivex.observers.DisposableObserver;
@@ -31,6 +32,18 @@ public class AdsPresenter extends AdsContract.Presenter {
               .compose(RxSchedulers.<DataResponse>switchObservableThread())
               .subscribe(mObserver);
         addSubscribe(mObserver);
+
+        new CommonSubscriber<DataResponse>(mView){
+            @Override
+            public void onNext(DataResponse dataResponse) {
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+            }
+        };
 
 
     }
