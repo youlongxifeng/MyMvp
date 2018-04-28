@@ -51,5 +51,41 @@ public class NetWorkUtil {
         return cm != null && cm.getActiveNetworkInfo().getType() == ConnectivityManager.TYPE_WIFI;
 
     }
+    public static boolean connection(Context context) {
+        try {
+            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = manager.getActiveNetworkInfo();
 
+            if (networkInfo != null && networkInfo.isConnected())
+                return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    /**
+     * 检查网络是否可用
+     *
+     * @param context
+     * @return
+     */
+    public static boolean isNetworkAvailable(Context context) {
+
+        ConnectivityManager manager = (ConnectivityManager) context
+                .getApplicationContext().getSystemService(
+                        Context.CONNECTIVITY_SERVICE);
+
+        if (manager == null) {
+            return false;
+        }
+
+        NetworkInfo networkinfo = manager.getActiveNetworkInfo();
+
+        if (networkinfo == null || !networkinfo.isAvailable()) {
+            return false;
+        }
+
+        return true;
+    }
 }
