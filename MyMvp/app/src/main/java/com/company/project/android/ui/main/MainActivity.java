@@ -14,6 +14,8 @@ import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
@@ -84,6 +86,13 @@ public class MainActivity extends BaseActivity<MainPresenter>
 
         getPhotoLocation(Environment.getExternalStorageDirectory() + File.separator + "a3.jpg");
         showDialog();
+
+        PowerManager  mPowerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+        WakeLock mIncallWakeLock = mPowerManager.newWakeLock(PowerManager.ACQUIRE_CAUSES_WAKEUP
+                | PowerManager.SCREEN_DIM_WAKE_LOCK, "incall");
+        if (mIncallWakeLock != null && mIncallWakeLock.isHeld()) {
+            mIncallWakeLock.release();
+        }
     }
 
     /**
@@ -161,7 +170,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
                 LogUtils.i("group========="+group);
             }
         }).start();
-        setScreenBrightness(1);
+       // setScreenBrightness(1);
     }
 
     /**
