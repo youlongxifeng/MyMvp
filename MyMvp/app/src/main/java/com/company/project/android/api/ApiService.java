@@ -2,9 +2,19 @@ package com.company.project.android.api;
 
 import com.company.project.android.bean.DataResponse;
 import com.company.project.android.bean.Gank;
+import com.company.project.android.bean.User;
+
+import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
+import retrofit2.http.POST;
+import retrofit2.http.PUT;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -30,4 +40,15 @@ public interface ApiService {
                                               @Query("version") String version,
                                               @Query("ads_support") String ads_support,
                                               @Query("timetoken") long timetoken);
+
+    @Multipart
+    @PUT("v2/book/1220562")
+    Observable<String> postBookString(@Part MultipartBody.Part photo,
+                                      @Part("username") RequestBody username,
+                                      @Part("password") RequestBody password );
+
+
+    @Multipart
+    @POST("casuserroleapi/editUserInfo")
+    Observable<User> uploadFile(@Part MultipartBody.Part file, @PartMap Map<String,Object> map);
 }

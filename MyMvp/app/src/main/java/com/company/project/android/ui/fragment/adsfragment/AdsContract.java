@@ -1,9 +1,13 @@
 package com.company.project.android.ui.fragment.adsfragment;
 
 import com.company.project.android.bean.DataResponse;
+import com.company.project.android.bean.User;
 import com.company.project.android.mvp.BaseModel;
 import com.company.project.android.mvp.BasePresenter;
 import com.company.project.android.mvp.BaseView;
+
+import java.io.File;
+import java.util.Map;
 
 import io.reactivex.Observable;
 
@@ -39,6 +43,8 @@ public interface AdsContract {
 
 
         Observable<DataResponse> getConfigInfo(String device_id, String version, String ads_support, long timetoken);
+
+       Observable<User> uploadFile(File file,String fileType,Map<String, Object> map);
 
     }
 

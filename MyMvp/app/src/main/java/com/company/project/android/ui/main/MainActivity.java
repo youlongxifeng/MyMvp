@@ -31,6 +31,7 @@ import com.company.project.android.utils.LogUtils;
 import com.company.project.android.utils.NetWorkUtil;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -93,7 +94,7 @@ public class MainActivity extends BaseActivity<MainPresenter>
         if (mIncallWakeLock != null && mIncallWakeLock.isHeld()) {
             mIncallWakeLock.release();
         }
-    }
+        }
 
     /**
      * 通过一张图片查询拍照地理位置
