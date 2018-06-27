@@ -26,12 +26,14 @@ public interface AdsContract {
 
         /**
          * 数据返回成功
+         *
          * @param data
          */
         void onSucceed(DataResponse data);
 
         /**
          * 数据返回失败
+         *
          * @param err
          */
         void onFail(String err);
@@ -44,7 +46,9 @@ public interface AdsContract {
 
         Observable<DataResponse> getConfigInfo(String device_id, String version, String ads_support, long timetoken);
 
-       Observable<User> uploadFile(File file,String fileType,Map<String, Object> map);
+        Observable<User> uploadFile(File file, String fileType, Map<String, Object> map);
+
+        Observable<User> uploadFilesWithParts(File file, String fileType, Map<String, Object> map);
 
     }
 
@@ -52,7 +56,7 @@ public interface AdsContract {
         /**
          * 此接口提供给服务组获取信息使用,门禁机通过请求服务组获取信息
          */
-        public abstract void requestConfig(String device_id,String version,String ads_support,long timetoken);
+        public abstract void requestConfig(String device_id, String version, String ads_support, long timetoken);
 
 
     }

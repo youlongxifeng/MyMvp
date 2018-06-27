@@ -7,7 +7,9 @@ import com.company.project.android.bean.DataResponse;
 import com.company.project.android.bean.User;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
@@ -38,6 +40,15 @@ public class AdsModel implements AdsContract.Model {
         RequestBody requestBody= RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part part = MultipartBody.Part.createFormData(fileType,file.getName(),requestBody);
         return  ApiEngine.getInstance().getApiService().uploadFile(part,map);
+    }
+
+    @Override
+    public Observable<User> uploadFilesWithParts(File file, String fileType, Map<String, Object> map) {
+        RequestBody requestBody= RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        MultipartBody.Part part = MultipartBody.Part.createFormData(fileType,file.getName(),requestBody);
+        List<MultipartBody.Part> partList=new ArrayList<>();
+        partList.add(part);
+        return  ApiEngine.getInstance().getApiService().uploadFilesWithParts(partList,map);
     }
 
 

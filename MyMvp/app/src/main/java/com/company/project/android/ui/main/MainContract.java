@@ -5,9 +5,12 @@ import com.company.project.android.mvp.BaseModel;
 import com.company.project.android.mvp.BasePresenter;
 import com.company.project.android.mvp.BaseView;
 
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import io.reactivex.Observable;
+import okhttp3.RequestBody;
 
 /**
  * @author Administrator
@@ -38,6 +41,8 @@ public interface MainContract {
         String loginSuccess();//Success, failure
         Observable<Gank> getGank();
 
+        Observable<JSONObject> accessToken(RequestBody requestBody);
+
     }
 
     abstract class Presenter extends BasePresenter<View, Model> {
@@ -45,6 +50,8 @@ public interface MainContract {
         public abstract String login(Map<String, String> maps);
 
         public abstract void getGank();
+
+        public abstract void  accessToken(String app_id,String secret_key);
 
     }
 }

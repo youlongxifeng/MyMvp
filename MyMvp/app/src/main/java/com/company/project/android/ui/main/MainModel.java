@@ -3,6 +3,8 @@ package com.company.project.android.ui.main;
 import com.company.project.android.api.ApiEngine;
 import com.company.project.android.bean.Gank;
 
+import org.json.JSONObject;
+import okhttp3.RequestBody;
 import io.reactivex.Observable;
 
 /**
@@ -27,5 +29,10 @@ public class MainModel implements MainContract.Model {
         return ApiEngine.getInstance().getApiService()
                         .getGank("1");
 
+    }
+
+    @Override
+    public Observable<JSONObject> accessToken(RequestBody requestBody) {
+        return ApiEngine.getInstance().getApiService().accessToken(  requestBody);
     }
 }

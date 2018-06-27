@@ -97,4 +97,6 @@ public class BaseApplication extends Application implements ActivityLifecycleCal
     public void onActivityDestroyed(Activity activity) {
 
     }
+
+
 }

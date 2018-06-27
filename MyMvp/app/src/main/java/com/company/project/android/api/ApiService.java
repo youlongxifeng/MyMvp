@@ -4,11 +4,16 @@ import com.company.project.android.bean.DataResponse;
 import com.company.project.android.bean.Gank;
 import com.company.project.android.bean.User;
 
+import org.json.JSONObject;
+
+import java.util.List;
 import java.util.Map;
 
 import io.reactivex.Observable;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -48,7 +53,29 @@ public interface ApiService {
                                       @Part("password") RequestBody password );
 
 
+    @FormUrlEncoded//
+    @POST("/v1/token")
+    Observable<JSONObject>accessToken(@Body RequestBody requestBody);
+
+    /**
+     * 上传单个文件
+     * @param file
+     * @param map
+     * @return
+     */
     @Multipart
     @POST("casuserroleapi/editUserInfo")
     Observable<User> uploadFile(@Part MultipartBody.Part file, @PartMap Map<String,Object> map);
+
+
+    /**
+     * 上传多个文件
+     * @param maps
+     * @param map
+     * @return
+     */
+    @Multipart
+    @POST("casuserroleapi/editUserInfo")
+    Observable<User> uploadFilesWithParts(@PartMap() List<MultipartBody.Part> maps, @PartMap Map<String,Object> map);
 }
+

@@ -6,11 +6,16 @@ import com.company.project.android.bean.Gank;
 import com.company.project.android.mvp.rx.RxSchedulers;
 import com.company.project.android.utils.LogUtils;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Map;
 
 import io.reactivex.Observable;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.observers.DisposableObserver;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 
 /**
  * @author Administrator
@@ -67,6 +72,26 @@ public class MainPresenter extends MainContract.Presenter {
 
     }
 
+    @Override
+    public void accessToken(String app_id, String secret_key) {
+        DisposableObserver<JSONObject> mObserver = getDisposableObserver2();
+
+        try {
+            JSONObject requestData = new JSONObject();
+            requestData.put("appid",app_id);
+            requestData.put("secret",secret_key);
+            RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"),requestData.toString());
+            mModel.accessToken( requestBody)
+                  .compose(RxSchedulers.<JSONObject>switchObservableThread())
+                  .subscribe(mObserver);
+            addSubscribe(mObserver);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            LogUtils.i("TAG","e======0="+e);
+        }
+
+    }
+
     private DisposableObserver<Gank> getDisposableObserver() {
         return new DisposableObserver<Gank>() {
             @Override
@@ -83,6 +108,26 @@ public class MainPresenter extends MainContract.Presenter {
             @Override
             public void onComplete() {
 
+            }
+        };
+    }
+
+    public DisposableObserver<JSONObject> getDisposableObserver2() {
+        return new DisposableObserver<JSONObject>() {
+            @Override
+            public void onNext(JSONObject aBoolean) {
+                LogUtils.i("TAG","aBoolean==="+aBoolean);
+
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                LogUtils.i("TAG","aBoolean==e="+e);
+            }
+
+            @Override
+            public void onComplete() {
+                LogUtils.i("TAG","onComplete=");
             }
         };
     }
