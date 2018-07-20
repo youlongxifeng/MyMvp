@@ -39,22 +39,16 @@
             <id />
           </State>
           <State>
-            <id>Code style issuesJava</id>
+            <id>Android</id>
           </State>
           <State>
-            <id>Java</id>
+            <id>CorrectnessLintAndroid</id>
           </State>
           <State>
-            <id>Java language level migration aidsJava</id>
+            <id>LintAndroid</id>
           </State>
           <State>
-            <id>Memory issuesJava</id>
-          </State>
-          <State>
-            <id>Performance issuesJava</id>
-          </State>
-          <State>
-            <id>Probable bugsJava</id>
+            <id>PerformanceLintAndroid</id>
           </State>
         </expanded-state>
         <selected-state>
