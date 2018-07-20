@@ -32,13 +32,13 @@ public class MainActivity extends BaseActivity<MainPresenter>
     @Override
     public void initView() {
 
-        showDialog();
+
     }
 
     @Override
     public void initDate() {
         mPresenter.getGank();
-        mPresenter.accessToken("f2a9d153188d87e18adc233ca8ee30da", "564f939a8f8a5befa67d62bdf79e6fa5");
+   //     mPresenter.accessToken("f2a9d153188d87e18adc233ca8ee30da", "564f939a8f8a5befa67d62bdf79e6fa5");
 
     }
 
